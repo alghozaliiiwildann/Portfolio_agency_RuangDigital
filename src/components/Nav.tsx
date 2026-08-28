@@ -3,6 +3,7 @@ import { cn } from "../utils/cn";
 import { Logo } from "./shared";
 
 const links = [
+  { href: "#top", label: "Home" },
   { href: "#work", label: "Work" },
   { href: "#about", label: "About" },
   { href: "#services", label: "Services" },

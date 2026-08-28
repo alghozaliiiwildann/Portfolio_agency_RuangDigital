@@ -69,7 +69,8 @@ html {
 }
 
 body {
-  background: #ffffff;
+  background: linear-gradient(160deg, #ffffff 0%, rgba(179,208,240,0.18) 35%, #ffffff 60%, rgba(179,208,240,0.10) 100%);
+  background-attachment: fixed;
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
