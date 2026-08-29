@@ -18,7 +18,7 @@ type Project = {
 
 const projects: Project[] = [
   {
-    img: "/images/project-atlas.jpg",
+    img: "/src/assets/project-atlas.jpg",
     title: "Atlas Analytics",
     cat: "SaaS · B2B Dashboard",
     year: "2025",
@@ -38,7 +38,7 @@ const projects: Project[] = [
     ],
   },
   {
-    img: "/images/project-nimbus.jpg",
+    img: "/src/assets/project-nimbus.jpg",
     title: "Nimbus Banking",
     cat: "Mobile · Fintech",
     year: "2024",
@@ -58,7 +58,7 @@ const projects: Project[] = [
     ],
   },
   {
-    img: "/images/project-orbit.jpg",
+    img: "/src/assets/project-orbit.jpg",
     title: "Orbit Studio",
     cat: "Web · E-commerce",
     year: "2024",
@@ -78,7 +78,7 @@ const projects: Project[] = [
     ],
   },
   {
-    img: "/images/project-pulse.jpg",
+    img: "/src/assets/project-pulse.jpg",
     title: "Pulse Wellness",
     cat: "App · Health & Wellness",
     year: "2023",

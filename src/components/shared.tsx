@@ -60,17 +60,24 @@ export function SectionHead({
 /* ---------------- RD logo mark ---------------- */
 export function Logo({ dark = false }: { dark?: boolean }) {
   return (
-    <a href="#top" className="group flex items-center gap-2.5" aria-label="Raka Dirga — home">
+    <a
+      href="#top"
+      className="group flex items-center gap-2.5"
+      aria-label="Ruang Digital — home"
+    >
+      <img
+        src="/src/assets/logo-agensi.jpeg"
+        alt="Ruang Digital"
+        className="h-9 w-9 object-contain transition-transform duration-300 group-hover:-rotate-6"
+      />
+
       <span
         className={cn(
-          "grid h-9 w-9 place-items-center rounded-lg text-[15px] font-bold tracking-tighter transition-transform duration-300 group-hover:-rotate-6",
-          dark ? "bg-white/10 text-white" : "border border-line bg-mist text-primary"
+          "text-[15px] font-semibold tracking-tight",
+          dark ? "text-white" : "text-ink"
         )}
       >
-        R<span className={dark ? "text-primary-soft" : "text-primary-soft"}>D</span>
-      </span>
-      <span className={cn("text-[15px] font-semibold tracking-tight", dark ? "text-white" : "text-ink")}>
-        raka dirga
+        Ruang Digital
       </span>
     </a>
   );

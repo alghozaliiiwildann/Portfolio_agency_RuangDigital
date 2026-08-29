@@ -195,7 +195,7 @@ export function Cta() {
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute -right-[10%] -bottom-32 h-[320px] w-[420px] rounded-full bg-primary-deep/25 blur-[120px]"
+        className="pointer-events-none absolute -right-[10%] -bottom-32 h-80 w-[420px] rounded-full bg-primary-deep/25 blur-[120px]"
         aria-hidden="true"
       />
 
