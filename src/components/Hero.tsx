@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 import { useCounter, useInView } from "../hooks";
+import { useLanguage } from "./LanguageContext";
 import { ArrowUpRight } from "./shared";
 
 /* ─────────────────────────────────────────────────────────────
@@ -74,6 +75,7 @@ function FloatingCard({
    Main project card
 ───────────────────────────────────────────────────────────── */
 function MainProjectCard() {
+  const { language } = useLanguage();
   const files = [
     { name: "hero-section.tsx", lang: "TSX", color: "#61dafb" },
     { name: "design-system.ts", lang: "TS", color: "#3178c6" },
@@ -94,7 +96,7 @@ function MainProjectCard() {
         <span className="h-2.5 w-2.5 rounded-full bg-[#FFBD2E]" />
         <span className="h-2.5 w-2.5 rounded-full bg-[#28C840]" />
         <div className="ml-3 flex h-6 flex-1 items-center rounded-md bg-white/70 px-3 border border-[rgba(179,208,240,0.5)]">
-          <span className="font-mono text-[10px] text-mute">rakadirga.com / work</span>
+          <span className="font-mono text-[10px] text-mute">RuangDigital.com / work</span>
         </div>
       </div>
 
@@ -106,7 +108,7 @@ function MainProjectCard() {
             <p className="text-[11px] font-mono font-medium tracking-widest uppercase text-mute">
               Active Projects
             </p>
-            <p className="text-lg font-bold text-[#183B56] mt-0.5">Q3 2026</p>
+            <p className="text-lg font-bold text-ink mt-0.5">Q3 2026</p>
           </div>
           <div
             className="flex h-8 items-center gap-1.5 rounded-full px-3 text-[11px] font-semibold text-white"
@@ -131,7 +133,7 @@ function MainProjectCard() {
               >
                 {f.lang}
               </span>
-              <span className="font-mono text-[12px] text-[#183B56] font-medium flex-1 truncate">
+              <span className="font-mono text-xs text-ink font-medium flex-1 truncate">
                 {f.name}
               </span>
               <div className="h-1.5 w-12 rounded-full bg-[rgba(179,208,240,0.5)]">
@@ -150,15 +152,15 @@ function MainProjectCard() {
         {/* Bottom metrics */}
         <div className="mt-4 grid grid-cols-3 gap-2">
           {[
-            { label: "Shipped", val: "48" },
-            { label: "Clients", val: "26" },
-            { label: "Score", val: "98" },
+            { label: language === "id" ? "Dikirim" : "Shipped", val: "48" },
+            { label: language === "id" ? "Klien" : "Clients", val: "26" },
+            { label: language === "id" ? "Skor" : "Score", val: "98" },
           ].map((m) => (
             <div
               key={m.label}
               className="rounded-xl bg-[rgba(243,250,255,0.8)] p-2.5 text-center border border-[rgba(179,208,240,0.3)]"
             >
-              <p className="text-base font-bold text-[#183B56]">{m.val}</p>
+              <p className="text-base font-bold text-ink">{m.val}</p>
               <p className="font-mono text-[9px] tracking-widest uppercase text-mute mt-0.5">
                 {m.label}
               </p>
@@ -183,7 +185,7 @@ function AnalyticsCard() {
       <p className="font-mono text-[9px] font-semibold tracking-[0.18em] uppercase text-mute">
         Engagement
       </p>
-      <p className="mt-1 text-xl font-bold text-[#183B56]">
+      <p className="mt-1 text-xl font-bold text-ink">
         +24%
         <span className="ml-1 text-[10px] font-medium text-emerald-500">↑</span>
       </p>
@@ -192,7 +194,7 @@ function AnalyticsCard() {
         {bars.map((h, i) => (
           <div
             key={i}
-            className="flex-1 rounded-[2px]"
+            className="flex-1 rounded-sm"
             style={{
               height: `${h}%`,
               background:
@@ -225,7 +227,7 @@ function MessageCard() {
       </div>
       <div className="min-w-0">
         <div className="flex items-center gap-1.5">
-          <p className="text-[12px] font-semibold text-[#183B56]">James A.</p>
+          <p className="text-xs font-semibold text-ink">James A.</p>
           <span className="h-1 w-1 rounded-full bg-emerald-400" />
         </div>
         <p className="text-[11px] text-mute leading-relaxed mt-0.5 line-clamp-2">
@@ -287,6 +289,28 @@ function SkillTagsCard() {
    Hero section
 ───────────────────────────────────────────────────────────── */
 export default function Hero() {
+  const { language } = useLanguage();
+
+  const introText =
+    language === "id"
+      ? "Buka untuk kerja — Q3 2026"
+      : "Open for work — Q3 2026";
+
+  const headline =
+    language === "id"
+      ? [
+          "Desain. Bangun.",
+          "Luncurkan. Ulangi.",
+          "Karya",
+          "Bicara Sendiri.",
+        ]
+      : ["Design. Build.", "Ship. Repeat.", "The Work", "Speaks Itself."];
+
+  const viewWork = language === "id" ? "Lihat proyek saya" : "View my work";
+  const aboutMe = language === "id" ? "Tentang saya" : "About me";
+  const ratingText = language === "id" ? "5.0 — 26 klien puas" : "5.0 — 26 happy clients";
+  const locationText = language === "id" ? "📍 Jakarta · Bekerja di seluruh dunia" : "📍 Jakarta · Working worldwide";
+
   return (
     <section
       id="top"
@@ -350,30 +374,30 @@ export default function Hero() {
               } as CSSProperties}
             >
               <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#1a6bd8] opacity-60" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-[#1a6bd8]" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-60" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
               </span>
               <span
                 className="font-mono text-[11px] font-semibold tracking-widest uppercase"
                 style={{ color: "#1553a8" }}
               >
-                Open for work — Q3 2026
+                {introText}
               </span>
             </div>
 
             {/* Main headline */}
             <h1
-              className="leading-[1.0] font-bold tracking-[-0.04em]"
+              className="leading-tight font-bold tracking-[-0.04em]"
               style={{
                 fontSize: "clamp(3rem, 7.5vw, 5.2rem)",
                 color: "#183B56",
               }}
             >
               <span className="mask-line">
-                <span style={d("0.1s")}>Design. Build.</span>
+                <span style={d("0.1s")}>{headline[0]}</span>
               </span>
               <span className="mask-line">
-                <span style={d("0.22s")}>Ship. Repeat.</span>
+                <span style={d("0.22s")}>{headline[1]}</span>
               </span>
               <span className="mask-line">
                 <span
@@ -386,11 +410,11 @@ export default function Hero() {
                     display: "inline-block",
                   } as CSSProperties}
                 >
-                  The Work
+                  {headline[2]}
                 </span>
               </span>
               <span className="mask-line">
-                <span style={d("0.46s")}>Speaks Itself.</span>
+                <span style={d("0.46s")}>{headline[3]}</span>
               </span>
             </h1>
 
@@ -399,9 +423,18 @@ export default function Hero() {
               className="fade-up mt-8 text-lg leading-relaxed"
               style={{ "--d": "0.58s", maxWidth: "500px", color: "#6B8499" } as CSSProperties}
             >
-              I&rsquo;m <strong style={{ color: "#183B56", fontWeight: 700 }}>Raka Dirga</strong> — product designer &amp;
-              creative developer. For 7+ years I&rsquo;ve helped startups turn complex
-              problems into clean, intuitive products that people actually love.
+              {language === "id" ? (
+                <>
+                  Saya <strong style={{ color: "#183B56", fontWeight: 700 }}>Raka Dirga</strong> — product designer dan
+                  creative developer. Selama 7+ tahun saya membantu startup mengubah masalah yang rumit menjadi produk yang bersih,
+                  intuitif, dan benar-benar disukai orang.
+                </>
+              ) : (
+                <>
+                  I&rsquo;m <strong style={{ color: "#183B56", fontWeight: 700 }}>Raka Dirga</strong> — product designer &amp;
+                  creative developer. For 7+ years I&rsquo;ve helped startups turn complex problems into clean, intuitive products that people actually love.
+                </>
+              )}
             </p>
 
             {/* CTA row */}
@@ -418,7 +451,7 @@ export default function Hero() {
                   boxShadow: "0 8px 28px -8px rgba(26,107,216,0.5)",
                 }}
               >
-                View my work
+                {viewWork}
                 <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
 
@@ -433,7 +466,7 @@ export default function Hero() {
                   backdropFilter: "blur(8px)",
                 }}
               >
-                About me
+                {aboutMe}
               </a>
             </div>
 
@@ -459,7 +492,7 @@ export default function Hero() {
                   className="ml-1 font-mono text-[11px]"
                   style={{ color: "#6B8499" }}
                 >
-                  5.0 — 26 happy clients
+                  {ratingText}
                 </span>
               </div>
               <span
@@ -470,7 +503,7 @@ export default function Hero() {
                 className="font-mono text-[11px]"
                 style={{ color: "#6B8499" }}
               >
-                📍 Jakarta · Working worldwide
+                {locationText}
               </span>
             </div>
           </div>
@@ -519,16 +552,16 @@ export default function Hero() {
           }}
         >
           <div className="border-r-0 md:border-r md:pr-8" style={{ borderColor: "rgba(179,208,240,0.4)" }}>
-            <Stat value={7} suffix="+" label="Years experience" delay={0} />
+            <Stat value={7} suffix="+" label={language === "id" ? "Tahun pengalaman" : "Years experience"} delay={0} />
           </div>
           <div className="md:border-r md:px-8" style={{ borderColor: "rgba(179,208,240,0.4)" }}>
-            <Stat value={48} suffix="+" label="Projects shipped" delay={150} />
+            <Stat value={48} suffix="+" label={language === "id" ? "Proyek dikirim" : "Projects shipped"} delay={150} />
           </div>
           <div className="md:border-r md:px-8" style={{ borderColor: "rgba(179,208,240,0.4)" }}>
-            <Stat value={26} suffix="" label="Happy clients" delay={300} />
+            <Stat value={26} suffix="" label={language === "id" ? "Klien puas" : "Happy clients"} delay={300} />
           </div>
           <div className="md:pl-8">
-            <Stat value={12} suffix="" label="Countries" delay={450} />
+            <Stat value={12} suffix="" label={language === "id" ? "Negara" : "Countries"} delay={450} />
           </div>
         </div>
       </div>

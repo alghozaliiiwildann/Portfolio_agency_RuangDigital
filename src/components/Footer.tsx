@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
+import { useLanguage } from "./LanguageContext";
 import { ArrowUpRight, Check, Dribbble, GitHub, LinkedIn, Logo, Mail, Reveal, XSocial } from "./shared";
 
 const socials = [
@@ -9,21 +10,63 @@ const socials = [
   { label: "X (Twitter)", href: "https://x.com", icon: <XSocial /> },
 ];
 
-const projectTypes = [
-  "Product Design",
-  "Design System",
-  "Front-end Development",
-  "Motion & Prototyping",
-  "Full Build (Design + Dev)",
-  "Not sure yet — help me decide",
-];
+const projectTypesByLanguage = {
+  id: [
+    "Product Design",
+    "Design System",
+    "Front-end Development",
+    "Motion & Prototyping",
+    "Full Build (Design + Dev)",
+    "Belum yakin — bantu saya memilih",
+  ],
+  en: [
+    "Product Design",
+    "Design System",
+    "Front-end Development",
+    "Motion & Prototyping",
+    "Full Build (Design + Dev)",
+    "Not sure yet — help me decide",
+  ],
+} as const;
 
 const inputClass =
   "w-full rounded-lg border border-white/15 bg-white/5 px-4 py-3 text-[15px] text-white placeholder-white/35 transition-all duration-300 focus:border-primary-soft focus:bg-white/10 focus:ring-2 focus:ring-primary/40 focus:outline-none";
 
 function ContactForm() {
+  const { language } = useLanguage();
   const [form, setForm] = useState({ name: "", email: "", type: "", message: "" });
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
+
+  const formCopy =
+    language === "id"
+      ? {
+          brief: "Brief proyek",
+          name: "Nama Anda",
+          email: "Alamat email",
+          type: "Jenis proyek",
+          typePlaceholder: "Pilih layanan…",
+          message: "Ceritakan tentang proyek Anda",
+          textareaPlaceholder: "Apa yang sedang Anda bangun? Kapan timeline-nya? Seperti apa sukses itu?",
+          submit: "Kirim brief saya",
+          sending: "Mengirim brief…",
+          another: "Kirim brief lain",
+          follow: "Tidak ada spam, tidak ada newsletter — saya balas dalam 24 jam.",
+        }
+      : {
+          brief: "Project brief",
+          name: "Your name",
+          email: "Email address",
+          type: "Project type",
+          typePlaceholder: "Select a service…",
+          message: "Tell me about your project",
+          textareaPlaceholder: "What are you building? What’s the timeline? What does success look like?",
+          submit: "Send my brief",
+          sending: "Sending brief…",
+          another: "Send another brief",
+          follow: "No spam, no newsletters — I reply within 24 hours.",
+        };
+
+  const projectTypes = projectTypesByLanguage[language];
 
   const update =
     (key: keyof typeof form) => (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
@@ -42,25 +85,39 @@ function ContactForm() {
   };
 
   if (status === "sent") {
+    const successText =
+      language === "id"
+        ? {
+            thanks: `Terima kasih${form.name ? `, ${form.name.split(" ")[0]}` : ""}!`,
+            intro: "Brief Anda sudah masuk ke inbox saya. Saya akan membalas ke",
+            email: form.email || "email Anda",
+            rest: "dalam 24 jam — biasanya lebih cepat.",
+          }
+        : {
+            thanks: `Thanks${form.name ? `, ${form.name.split(" ")[0]}` : ""}!`,
+            intro: "Your brief is in my inbox. I’ll reply to",
+            email: form.email || "your email",
+            rest: "within 24 hours — usually much faster.",
+          };
+
     return (
       <div className="animate-[fadeUp_0.5s_cubic-bezier(0.22,1,0.36,1)_both] flex h-full min-h-[480px] flex-col items-center justify-center rounded-2xl border border-white/15 bg-white/5 p-8 text-center backdrop-blur">
         <span className="grid h-16 w-16 place-items-center rounded-full bg-primary text-white">
           <Check className="h-7 w-7" />
         </span>
         <h3 className="mt-6 text-2xl font-bold tracking-tight text-white">
-          Thanks{form.name ? `, ${form.name.split(" ")[0]}` : ""}!
+          {successText.thanks}
         </h3>
         <p className="mt-3 max-w-sm text-[15px] leading-relaxed text-white/60">
-          Your brief is in my inbox. I&rsquo;ll reply to{" "}
-          <span className="font-semibold text-primary-soft">{form.email || "your email"}</span> within 24 hours —
-          usually much faster.
+          {successText.intro}{" "}
+          <span className="font-semibold text-primary-soft">{successText.email}</span> {successText.rest}
         </p>
         <button
           type="button"
           onClick={reset}
           className="mt-8 rounded-lg border border-white/20 px-6 py-3 text-sm font-semibold text-white/80 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary-soft hover:text-white"
         >
-          Send another brief
+          {formCopy.another}
         </button>
       </div>
     );
@@ -72,12 +129,12 @@ function ContactForm() {
       className="rounded-2xl border border-white/15 bg-white/5 p-6 backdrop-blur sm:p-7"
       noValidate={false}
     >
-      <p className="font-mono text-xs font-medium tracking-[0.2em] uppercase text-white/50">Project brief</p>
+      <p className="font-mono text-xs font-medium tracking-[0.2em] uppercase text-white/50">{formCopy.brief}</p>
 
       <div className="mt-5 grid gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="cf-name" className="mb-1.5 block text-[13px] font-semibold text-white/80">
-            Your name
+            {formCopy.name}
           </label>
           <input
             id="cf-name"
@@ -92,7 +149,7 @@ function ContactForm() {
         </div>
         <div>
           <label htmlFor="cf-email" className="mb-1.5 block text-[13px] font-semibold text-white/80">
-            Email address
+            {formCopy.email}
           </label>
           <input
             id="cf-email"
@@ -109,7 +166,7 @@ function ContactForm() {
 
       <div className="mt-4">
         <label htmlFor="cf-type" className="mb-1.5 block text-[13px] font-semibold text-white/80">
-          Project type
+          {formCopy.type}
         </label>
         <div className="relative">
           <select
@@ -120,7 +177,7 @@ function ContactForm() {
             className={`${inputClass} appearance-none pr-10 [&>option]:bg-white [&>option]:text-ink ${form.type ? "" : "text-white/35"}`}
           >
             <option value="" disabled>
-              Select a service…
+              {formCopy.typePlaceholder}
             </option>
             {projectTypes.map((t) => (
               <option key={t} value={t}>
@@ -145,13 +202,13 @@ function ContactForm() {
 
       <div className="mt-4">
         <label htmlFor="cf-message" className="mb-1.5 block text-[13px] font-semibold text-white/80">
-          Tell me about your project
+          {formCopy.message}
         </label>
         <textarea
           id="cf-message"
           required
           rows={4}
-          placeholder="What are you building? What's the timeline? What does success look like?"
+          placeholder={formCopy.textareaPlaceholder}
           value={form.message}
           onChange={update("message")}
           className={`${inputClass} resize-none`}
@@ -169,24 +226,45 @@ function ContactForm() {
               <circle cx="12" cy="12" r="9" stroke="currentColor" strokeOpacity="0.3" strokeWidth="2.5" />
               <path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
             </svg>
-            Sending brief…
+            {formCopy.sending}
           </>
         ) : (
           <>
-            Send my brief
+            {formCopy.submit}
             <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </>
         )}
       </button>
 
       <p className="mt-4 text-center font-mono text-[11px] tracking-wide text-white/40">
-        No spam, no newsletters — I reply within 24 hours.
+        {formCopy.follow}
       </p>
     </form>
   );
 }
 
 export function Cta() {
+  const { language } = useLanguage();
+
+  const ctaCopy =
+    language === "id"
+      ? {
+          eyebrow: "Kontak",
+          headline: ["Punya ide?", "Yuk wujudkan itu", "nyata."],
+          subtitle:
+            "Satu slot terbuka untuk Q3 2026. Ceritakan produk Anda, timeline, dan apa arti hasil yang baik — saya akan membalas dalam 24 jam.",
+          button: "Kirim brief saya",
+          follow: "Tidak ada spam, tidak ada newsletter — saya balas dalam 24 jam.",
+        }
+      : {
+          eyebrow: "Contact",
+          headline: ["Have an idea?", "Let’s make it", "real."],
+          subtitle:
+            "One open slot for Q3 2026. Tell me about your product, your timeline, and what “good outcome” looks like — I’ll reply within 24 hours.",
+          button: "Send my brief",
+          follow: "No spam, no newsletters — I reply within 24 hours.",
+        };
+
   return (
     <section id="contact" className="relative scroll-mt-24 overflow-hidden bg-ink text-white">
       {/* glows */}
@@ -204,16 +282,15 @@ export function Cta() {
         <div>
           <Reveal>
             <p className="font-mono text-xs font-medium tracking-[0.22em] uppercase text-white/50">
-              <span className="text-primary-soft">(08)</span>&ensp;—&ensp;Contact
+              <span className="text-primary-soft">(08)</span>&ensp;—&ensp;{ctaCopy.eyebrow}
             </p>
             <h2 className="mt-6 text-[clamp(2.6rem,6vw,4.3rem)] leading-[1.03] font-bold tracking-[-0.03em] text-balance">
-              Have an idea?
+              {ctaCopy.headline[0]}
               <br />
-              Let&rsquo;s make it <span className="text-primary-soft">real.</span>
+              {ctaCopy.headline[1]} <span className="text-primary-soft">{ctaCopy.headline[2]}</span>
             </h2>
             <p className="mt-7 max-w-md text-lg leading-relaxed text-white/60">
-              One open slot for Q3 2026. Tell me about your product, your timeline, and what &ldquo;good
-              outcome&rdquo; looks like — I&rsquo;ll reply within 24 hours.
+              {ctaCopy.subtitle}
             </p>
           </Reveal>
 
@@ -251,7 +328,9 @@ export function Cta() {
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
               </span>
               <span className="text-[13px] font-medium text-white/70">
-                1 slot open for Q3 2026 · Avg. response time: 6 hours
+                {language === "id"
+                  ? "1 slot terbuka untuk Q3 2026 · Rata-rata balas: 6 jam"
+                  : "1 slot open for Q3 2026 · Avg. response time: 6 hours"}
               </span>
             </div>
           </Reveal>
@@ -267,6 +346,8 @@ export function Cta() {
 }
 
 export default function Footer() {
+  const { language } = useLanguage();
+
   return (
     <footer className="border-t border-white/10 bg-ink text-white">
       <div className="mx-auto max-w-7xl px-6 py-14">
@@ -274,20 +355,23 @@ export default function Footer() {
           <div className="md:col-span-5">
             <Logo dark />
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/50">
-              Product designer &amp; creative developer, crafting digital products that feel effortless — from
-              Jakarta, for the world.
+              {language === "id"
+                ? "Product designer & creative developer yang merancang produk digital yang terasa effortless — dari Jakarta, untuk dunia."
+                : "Product designer & creative developer, crafting digital products that feel effortless — from Jakarta, for the world."}
             </p>
           </div>
 
           <div className="md:col-span-3">
-            <p className="font-mono text-[11px] font-medium tracking-[0.2em] uppercase text-white/40">Sitemap</p>
+            <p className="font-mono text-[11px] font-medium tracking-[0.2em] uppercase text-white/40">
+              {language === "id" ? "Peta situs" : "Sitemap"}
+            </p>
             <ul className="mt-4 space-y-2.5">
               {[
-                ["Work", "#work"],
-                ["About", "#about"],
-                ["Services", "#services"],
-                ["Testimonials", "#testimonials"],
-                ["Contact", "#contact"],
+                [language === "id" ? "Proyek" : "Work", "#work"],
+                [language === "id" ? "Tentang" : "About", "#about"],
+                [language === "id" ? "Layanan" : "Services", "#services"],
+                [language === "id" ? "Testimoni" : "Testimonials", "#testimonials"],
+                [language === "id" ? "Kontak" : "Contact", "#contact"],
               ].map(([label, href]) => (
                 <li key={href}>
                   <a href={href} className="link-slide text-sm font-medium text-white/70 hover:text-white">
@@ -299,7 +383,9 @@ export default function Footer() {
           </div>
 
           <div className="md:col-span-2">
-            <p className="font-mono text-[11px] font-medium tracking-[0.2em] uppercase text-white/40">Elsewhere</p>
+            <p className="font-mono text-[11px] font-medium tracking-[0.2em] uppercase text-white/40">
+              {language === "id" ? "Lainnya" : "Elsewhere"}
+            </p>
             <ul className="mt-4 space-y-2.5">
               {socials.map((s) => (
                 <li key={s.label}>
@@ -321,7 +407,7 @@ export default function Footer() {
               href="#top"
               className="group inline-flex items-center gap-2.5 rounded-lg border border-white/15 px-5 py-3 text-sm font-semibold text-white/80 transition-all duration-300 hover:-translate-y-1 hover:border-primary-soft hover:bg-white/5 hover:text-white"
             >
-              Back to top
+              {language === "id" ? "Kembali ke atas" : "Back to top"}
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -339,9 +425,14 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-8 sm:flex-row sm:items-center">
-          <p className="font-mono text-xs text-white/40">© 2026 Raka Dirga. All rights reserved.</p>
           <p className="font-mono text-xs text-white/40">
-            Crafted in Jakarta with Space Grotesk &amp; too much <span className="text-primary-soft">coffee</span>
+            {language === "id" ? "© 2026 Raka Dirga. Semua hak dilindungi." : "© 2026 Raka Dirga. All rights reserved."}
+          </p>
+          <p className="font-mono text-xs text-white/40">
+            {language === "id"
+              ? "Dibuat di Jakarta dengan Space Grotesk & terlalu banyak "
+              : "Crafted in Jakarta with Space Grotesk & too much "}
+            <span className="text-primary-soft">{language === "id" ? "kopi" : "coffee"}</span>
           </p>
         </div>
       </div>

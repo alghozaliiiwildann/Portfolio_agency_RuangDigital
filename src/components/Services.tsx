@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useLanguage } from "./LanguageContext";
 import { Check, Reveal, SectionHead } from "./shared";
 
 type IconProps = { className?: string };
@@ -34,44 +34,90 @@ const SparkIcon = ({ className = "h-6 w-6" }: IconProps) => (
   </svg>
 );
 
-const services: { icon: ReactNode; title: string; desc: string; points: string[] }[] = [
-  {
-    icon: <PenIcon />,
-    title: "Product Design",
-    desc: "From fuzzy problem to polished, testable UI. I design products people understand on first touch.",
-    points: ["UX audits & research", "Flows & wireframes", "High-fidelity UI"],
-  },
-  {
-    icon: <LayersIcon />,
-    title: "Design Systems",
-    desc: "Token-based systems that scale with your team — documented, versioned, and loved by engineers.",
-    points: ["Design tokens", "Component libraries", "Docs & governance"],
-  },
-  {
-    icon: <CodeIcon />,
-    title: "Front-end Development",
-    desc: "Production React & Next.js with pixel fidelity. Fast, accessible, and 90+ on Lighthouse.",
-    points: ["React / Next.js", "Tailwind & TypeScript", "Performance & a11y"],
-  },
-  {
-    icon: <SparkIcon />,
-    title: "Motion & Prototyping",
-    desc: "Micro-interactions and prototypes that make the feel of the product obvious before a line of code.",
-    points: ["Framer prototypes", "Micro-interactions", "Lottie & GSAP"],
-  },
-];
+const servicesByLanguage = {
+  id: [
+    {
+      icon: <PenIcon />,
+      title: "Product Design",
+      desc: "Dari masalah yang masih kabur hingga UI yang halus dan bisa diuji. Saya mendesain produk yang mudah dipahami di sentuhan pertama.",
+      points: ["Audit UX & riset", "Flow & wireframe", "UI beresolusi tinggi"],
+    },
+    {
+      icon: <LayersIcon />,
+      title: "Design Systems",
+      desc: "Sistem berbasis token yang tumbuh bersama tim Anda — terdokumentasi, terversi, dan disukai engineer.",
+      points: ["Design tokens", "Library komponen", "Dokumentasi & governance"],
+    },
+    {
+      icon: <CodeIcon />,
+      title: "Front-end Development",
+      desc: "React & Next.js untuk production dengan presisi pixel. Cepat, aksesibel, dan 90+ di Lighthouse.",
+      points: ["React / Next.js", "Tailwind & TypeScript", "Performance & a11y"],
+    },
+    {
+      icon: <SparkIcon />,
+      title: "Motion & Prototyping",
+      desc: "Micro-interaksi dan prototipe yang membuat rasa produk jelas sebelum satu baris kode dibuat.",
+      points: ["Prototipe Framer", "Micro-interaksi", "Lottie & GSAP"],
+    },
+  ],
+  en: [
+    {
+      icon: <PenIcon />,
+      title: "Product Design",
+      desc: "From fuzzy problem to polished, testable UI. I design products people understand on first touch.",
+      points: ["UX audits & research", "Flows & wireframes", "High-fidelity UI"],
+    },
+    {
+      icon: <LayersIcon />,
+      title: "Design Systems",
+      desc: "Token-based systems that scale with your team — documented, versioned, and loved by engineers.",
+      points: ["Design tokens", "Component libraries", "Docs & governance"],
+    },
+    {
+      icon: <CodeIcon />,
+      title: "Front-end Development",
+      desc: "Production React & Next.js with pixel fidelity. Fast, accessible, and 90+ on Lighthouse.",
+      points: ["React / Next.js", "Tailwind & TypeScript", "Performance & a11y"],
+    },
+    {
+      icon: <SparkIcon />,
+      title: "Motion & Prototyping",
+      desc: "Micro-interactions and prototypes that make the feel of the product obvious before a line of code.",
+      points: ["Framer prototypes", "Micro-interactions", "Lottie & GSAP"],
+    },
+  ],
+} as const;
 
 export function Services() {
+  const { language } = useLanguage();
+  const services = servicesByLanguage[language];
+
+  const servicesCopy =
+    language === "id"
+      ? {
+          label: "Layanan",
+          title: (
+            <>
+              Yang bisa saya <span className="text-primary">lakukan untuk Anda.</span>
+            </>
+          ),
+        }
+      : {
+          label: "Services",
+          title: (
+            <>
+              What I can do <span className="text-primary">for you.</span>
+            </>
+          ),
+        };
+
   return (
     <section id="services" className="mx-auto max-w-7xl scroll-mt-24 px-6 py-24 md:py-32">
       <SectionHead
         index="03"
-        label="Services"
-        title={
-          <>
-            What I can do <span className="text-primary">for you.</span>
-          </>
-        }
+        label={servicesCopy.label}
+        title={servicesCopy.title}
       />
 
       <div className="mt-14 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
@@ -99,41 +145,75 @@ export function Services() {
   );
 }
 
-const steps = [
-  {
-    n: "01",
-    title: "Discover",
-    desc: "A focused workshop to understand your users, your numbers, and what ‘success’ actually means.",
-  },
-  {
-    n: "02",
-    title: "Define",
-    desc: "Strategy, information architecture, and user flows — the invisible 40% that makes the visible 60% work.",
-  },
-  {
-    n: "03",
-    title: "Design",
-    desc: "Rapid iterations in the open. You see progress every week, in a prototype you can click, not a deck.",
-  },
-  {
-    n: "04",
-    title: "Deliver",
-    desc: "Production-ready front-end, QA, and a handoff your team can run with without me in the room.",
-  },
-];
+const stepsByLanguage = {
+  id: [
+    {
+      n: "01",
+      title: "Temukan",
+      desc: "Workshop fokus untuk memahami pengguna, angka, dan arti ‘kesuksesan’ yang sebenarnya.",
+    },
+    {
+      n: "02",
+      title: "Definisikan",
+      desc: "Strategi, arsitektur informasi, dan user flow — 40% yang tak terlihat yang membuat 60% yang tampak bisa bekerja.",
+    },
+    {
+      n: "03",
+      title: "Desain",
+      desc: "Iterasi cepat secara terbuka. Anda melihat progres setiap minggu, dalam prototipe yang bisa diklik, bukan deck.",
+    },
+    {
+      n: "04",
+      title: "Serahkan",
+      desc: "Front-end siap produksi, QA, dan handoff yang tim Anda bisa jalankan tanpa saya di ruangan.",
+    },
+  ],
+  en: [
+    {
+      n: "01",
+      title: "Discover",
+      desc: "A focused workshop to understand your users, your numbers, and what ‘success’ actually means.",
+    },
+    {
+      n: "02",
+      title: "Define",
+      desc: "Strategy, information architecture, and user flows — the invisible 40% that makes the visible 60% work.",
+    },
+    {
+      n: "03",
+      title: "Design",
+      desc: "Rapid iterations in the open. You see progress every week, in a prototype you can click, not a deck.",
+    },
+    {
+      n: "04",
+      title: "Deliver",
+      desc: "Production-ready front-end, QA, and a handoff your team can run with without me in the room.",
+    },
+  ],
+} as const;
 
 export function Process() {
+  const { language } = useLanguage();
+  const steps = stepsByLanguage[language];
+
   return (
     <section className="border-y border-line bg-mist/50">
       <div className="mx-auto max-w-7xl px-6 py-24 md:py-32">
         <SectionHead
           index="04"
-          label="Process"
+          label={language === "id" ? "Proses" : "Process"}
           title={
-            <>
-              A calm, proven
-              <br className="hidden md:block" /> process — <span className="text-primary">no black boxes.</span>
-            </>
+            language === "id" ? (
+              <>
+                Proses yang tenang,
+                <br className="hidden md:block" /> teruji — <span className="text-primary">tanpa kotak hitam.</span>
+              </>
+            ) : (
+              <>
+                A calm, proven
+                <br className="hidden md:block" /> process — <span className="text-primary">no black boxes.</span>
+              </>
+            )
           }
         />
 

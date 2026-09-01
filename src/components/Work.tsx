@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLanguage } from "./LanguageContext";
 import { ArrowUpRight, Reveal, SectionHead } from "./shared";
 
 type Project = {
@@ -100,6 +101,29 @@ const projects: Project[] = [
 ];
 
 function CaseStudy({ project, onClose }: { project: Project; onClose: () => void }) {
+  const { language } = useLanguage();
+
+  const caseStudyCopy =
+    language === "id"
+      ? {
+          client: "Klien",
+          role: "Peran",
+          timeline: "Timeline",
+          year: "Tahun",
+          challenge: "Tantangannya",
+          approach: "Pendekatan saya",
+          results: "Hasil",
+        }
+      : {
+          client: "Client",
+          role: "Role",
+          timeline: "Timeline",
+          year: "Year",
+          challenge: "The challenge",
+          approach: "How I approached it",
+          results: "The results",
+        };
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -156,10 +180,10 @@ function CaseStudy({ project, onClose }: { project: Project; onClose: () => void
           {/* meta */}
           <dl className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-4">
             {[
-              ["Client", project.client],
-              ["Role", project.role],
-              ["Timeline", project.timeline],
-              ["Year", project.year],
+              [caseStudyCopy.client, project.client],
+              [caseStudyCopy.role, project.role],
+              [caseStudyCopy.timeline, project.timeline],
+              [caseStudyCopy.year, project.year],
             ].map(([k, v]) => (
               <div key={k} className="bg-white px-4 py-3.5">
                 <dt className="font-mono text-[10px] tracking-[0.16em] uppercase text-mute">{k}</dt>
@@ -179,18 +203,18 @@ function CaseStudy({ project, onClose }: { project: Project; onClose: () => void
           {/* challenge & approach */}
           <div className="mt-10 grid gap-8 sm:grid-cols-2 sm:gap-10">
             <div>
-              <h3 className="font-mono text-xs font-medium tracking-[0.2em] uppercase text-primary">The challenge</h3>
+              <h3 className="font-mono text-xs font-medium tracking-[0.2em] uppercase text-primary">{caseStudyCopy.challenge}</h3>
               <p className="mt-3 text-[15px] leading-relaxed text-ink-soft">{project.challenge}</p>
             </div>
             <div>
-              <h3 className="font-mono text-xs font-medium tracking-[0.2em] uppercase text-primary">How I approached it</h3>
+              <h3 className="font-mono text-xs font-medium tracking-[0.2em] uppercase text-primary">{caseStudyCopy.approach}</h3>
               <p className="mt-3 text-[15px] leading-relaxed text-ink-soft">{project.approach}</p>
             </div>
           </div>
 
           {/* results */}
           <div className="mt-10">
-            <h3 className="font-mono text-xs font-medium tracking-[0.2em] uppercase text-primary">The results</h3>
+            <h3 className="font-mono text-xs font-medium tracking-[0.2em] uppercase text-primary">{caseStudyCopy.results}</h3>
             <div className="mt-4 grid gap-4 sm:grid-cols-3">
               {project.results.map((r) => (
                 <div key={r.label} className="rounded-xl bg-mist px-5 py-5">
@@ -217,7 +241,7 @@ function CaseStudy({ project, onClose }: { project: Project; onClose: () => void
               onClick={onClose}
               className="group inline-flex items-center gap-2.5 rounded-lg bg-primary px-6 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary-deep"
             >
-              Start a similar project
+              {language === "id" ? "Mulai proyek serupa" : "Start a similar project"}
               <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </a>
             <button
@@ -225,7 +249,7 @@ function CaseStudy({ project, onClose }: { project: Project; onClose: () => void
               onClick={onClose}
               className="rounded-lg border border-ink/15 px-6 py-3.5 text-sm font-semibold text-ink transition-all duration-300 hover:border-ink/35 hover:bg-mist"
             >
-              Back to all work
+              {language === "id" ? "Kembali ke semua proyek" : "Back to all work"}
             </button>
           </div>
         </div>
@@ -235,27 +259,54 @@ function CaseStudy({ project, onClose }: { project: Project; onClose: () => void
 }
 
 export default function Work() {
+  const { language } = useLanguage();
   const [active, setActive] = useState<Project | null>(null);
+
+  const workCopy =
+    language === "id"
+      ? {
+          label: "Proyek Terpilih",
+          title: (
+            <>
+              Proyek yang rilis &amp;
+              <br className="hidden md:block" /> benar-benar <span className="text-primary">berkinerja.</span>
+            </>
+          ),
+          cta: "Punya proyek di pikiran? Mari bicara",
+          caseStudy: "Studi kasus",
+          read: "Baca studi kasus",
+          start: "Mulai proyek serupa",
+          back: "Kembali ke semua proyek",
+        }
+      : {
+          label: "Selected Work",
+          title: (
+            <>
+              Work that ships &amp;
+              <br className="hidden md:block" /> actually <span className="text-primary">performs.</span>
+            </>
+          ),
+          cta: "Have a project in mind? Let’s talk",
+          caseStudy: "Case study",
+          read: "Read case study",
+          start: "Start a similar project",
+          back: "Back to all work",
+        };
 
   return (
     <section id="work" className="mx-auto max-w-7xl scroll-mt-24 px-6 py-24 md:py-32">
       <div className="flex flex-wrap items-end justify-between gap-6">
         <SectionHead
           index="01"
-          label="Selected Work"
-          title={
-            <>
-              Work that ships &amp;
-              <br className="hidden md:block" /> actually <span className="text-primary">performs.</span>
-            </>
-          }
+          label={workCopy.label}
+          title={workCopy.title}
         />
         <Reveal delay={120} className="hidden md:block">
           <a
             href="#contact"
             className="link-slide inline-flex items-center gap-2 pb-1 text-[15px] font-semibold text-ink-soft hover:text-ink"
           >
-            Have a project in mind? Let&rsquo;s talk
+            {workCopy.cta}
             <ArrowUpRight className="h-4 w-4" />
           </a>
         </Reveal>
@@ -286,7 +337,7 @@ export default function Work() {
                   {p.year}
                 </span>
                 <span className="absolute top-4 right-4 rounded-full bg-ink/80 px-3 py-1 font-mono text-[11px] font-medium text-white backdrop-blur transition-colors duration-300 group-hover:bg-primary">
-                  Case study
+                  {workCopy.caseStudy}
                 </span>
               </div>
 
@@ -307,7 +358,7 @@ export default function Work() {
                       </span>
                     ))}
                     <span className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-primary opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 md:-translate-x-2">
-                      Read case study
+                      {workCopy.read}
                       <ArrowUpRight className="h-3.5 w-3.5" />
                     </span>
                   </div>

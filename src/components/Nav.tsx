@@ -1,19 +1,35 @@
 import { useEffect, useState } from "react";
 import { cn } from "../utils/cn";
+import { useLanguage } from "./LanguageContext";
 import { Logo } from "./shared";
 
-const navLinks = [
-  { href: "#top", label: "Home" },
-  { href: "#work", label: "Work" },
-  { href: "#about", label: "About" },
-  { href: "#services", label: "Services" },
-  { href: "#testimonials", label: "Testimonials" },
-];
+const languageOptions = ["id", "en"] as const;
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [progress, setProgress] = useState(0);
   const [open, setOpen] = useState(false);
+  const { language, setLanguage } = useLanguage();
+
+  const navLinks =
+    language === "id"
+      ? [
+          { href: "#top", label: "Beranda" },
+          { href: "#work", label: "Proyek" },
+          { href: "#about", label: "Tentang" },
+          { href: "#services", label: "Layanan" },
+          { href: "#testimonials", label: "Testimoni" },
+        ]
+      : [
+          { href: "#top", label: "Home" },
+          { href: "#work", label: "Work" },
+          { href: "#about", label: "About" },
+          { href: "#services", label: "Services" },
+          { href: "#testimonials", label: "Testimonials" },
+        ];
+
+  const signInLabel = language === "id" ? "Masuk" : "Sign In";
+  const getStartedLabel = language === "id" ? "Mulai" : "Get Started";
 
   useEffect(() => {
     const onScroll = () => {
@@ -42,7 +58,7 @@ export default function Nav() {
       )}
     >
       {/* Scroll progress bar */}
-      <div className="absolute inset-x-0 top-0 h-[2px] bg-transparent">
+      <div className="absolute inset-x-0 top-0 h-0.5 bg-transparent">
         <div
           className="h-full transition-[width] duration-150 ease-out"
           style={{
@@ -73,20 +89,39 @@ export default function Nav() {
           ))}
         </nav>
 
-        {/* ── Right: Auth buttons (desktop) ── */}
+        {/* ── Right: Language + Auth buttons (desktop) ── */}
         <div className="hidden items-center gap-2.5 md:flex">
+          <div className="inline-flex items-center rounded-full border border-ink/15 bg-white/60 p-1 shadow-sm backdrop-blur-sm">
+            {languageOptions.map((option) => (
+              <button
+                key={option}
+                type="button"
+                onClick={() => setLanguage(option)}
+                className={cn(
+                  "min-w-11 rounded-full px-3 py-1.5 text-[11px] font-semibold transition-all duration-200",
+                  language === option
+                    ? "bg-primary text-white shadow-sm"
+                    : "text-ink-soft hover:text-primary"
+                )}
+                aria-label={`Switch language to ${option === "id" ? "Indonesian" : "English"}`}
+              >
+                {option === "id" ? "ID" : "EN"}
+              </button>
+            ))}
+          </div>
+
           <a
             href="#contact"
             className="inline-flex h-9 items-center rounded-lg border border-ink/15 bg-transparent px-4 text-[13px] font-semibold text-ink-soft transition-all duration-200 hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
           >
-            Sign In
+            {signInLabel}
           </a>
           <a
             href="#contact"
             className="group inline-flex h-9 items-center gap-1.5 rounded-lg px-4 text-[13px] font-semibold text-white transition-all duration-200 hover:opacity-90 hover:-translate-y-px hover:shadow-[0_6px_20px_-6px_rgba(26,107,216,0.55)]"
             style={{ background: "linear-gradient(135deg, #1a6bd8, #2c82f0)" }}
           >
-            Get Started
+            {getStartedLabel}
             <svg viewBox="0 0 16 16" fill="none" className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true">
               <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -147,12 +182,31 @@ export default function Nav() {
 
         {/* Mobile CTA buttons */}
         <div className="flex flex-col gap-3 border-t border-line px-5 py-6">
+          <div className="mb-1 flex justify-center">
+            <div className="inline-flex rounded-full border border-ink/15 bg-white p-1">
+              {languageOptions.map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  onClick={() => setLanguage(option)}
+                  className={cn(
+                    "min-w-12 rounded-full px-3 py-2 text-sm font-semibold transition-all duration-200",
+                    language === option
+                      ? "bg-primary text-white"
+                      : "text-ink-soft hover:text-primary"
+                  )}
+                >
+                  {option === "id" ? "ID" : "EN"}
+                </button>
+              ))}
+            </div>
+          </div>
           <a
             href="#contact"
             onClick={() => setOpen(false)}
             className="flex h-12 items-center justify-center rounded-xl border border-ink/15 text-[15px] font-semibold text-ink-soft transition-colors hover:border-primary/30 hover:text-primary"
           >
-            Sign In
+            {signInLabel}
           </a>
           <a
             href="#contact"
@@ -160,7 +214,7 @@ export default function Nav() {
             className="flex h-12 items-center justify-center gap-2 rounded-xl text-[15px] font-semibold text-white"
             style={{ background: "linear-gradient(135deg, #1a6bd8, #2c82f0)" }}
           >
-            Get Started
+            {getStartedLabel}
             <svg viewBox="0 0 16 16" fill="none" className="h-4 w-4" aria-hidden="true">
               <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
             </svg>

@@ -1,18 +1,33 @@
+import { useLanguage } from "./LanguageContext";
 import { Asterisk } from "./shared";
 import { Reveal } from "./shared";
 
-const items = [
-  "Product Design",
-  "Design Systems",
-  "Front-end Development",
-  "Prototyping",
-  "Motion & Interaction",
-  "Brand Identity",
-  "UX Research",
-  "Web Performance",
-];
+const itemsByLanguage = {
+  id: [
+    "Product Design",
+    "Design Systems",
+    "Front-end Development",
+    "Prototipe",
+    "Motion & Interaksi",
+    "Brand Identity",
+    "UX Research",
+    "Web Performance",
+  ],
+  en: [
+    "Product Design",
+    "Design Systems",
+    "Front-end Development",
+    "Prototyping",
+    "Motion & Interaction",
+    "Brand Identity",
+    "UX Research",
+    "Web Performance",
+  ],
+} as const;
 
 export function Marquee() {
+  const { language } = useLanguage();
+  const items = itemsByLanguage[language];
   const row = (hidden: boolean) => (
     <div className="flex shrink-0 items-center" aria-hidden={hidden || undefined}>
       {items.map((item) => (
@@ -39,11 +54,13 @@ export function Marquee() {
 const brands = ["NORTHWIND", "FINARA", "HELIOS", "DATAWAVE", "LOOMLY", "BRIGHTLINE"];
 
 export function TrustedBy() {
+  const { language } = useLanguage();
+
   return (
     <section className="mx-auto max-w-7xl px-6 py-14">
       <Reveal>
         <p className="text-center font-mono text-xs tracking-[0.22em] uppercase text-mute">
-          Trusted by teams at
+          {language === "id" ? "Dipercaya oleh tim di" : "Trusted by teams at"}
         </p>
         <div className="mt-7 flex flex-wrap items-center justify-center gap-x-12 gap-y-5">
           {brands.map((b) => (
