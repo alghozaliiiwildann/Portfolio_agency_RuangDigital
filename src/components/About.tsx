@@ -20,7 +20,7 @@ const experienceByLanguage = {
       period: "2023 — Sekarang",
       role: "Senior Product Designer",
       company: "Finara",
-      place: "Jakarta / Remote",
+      place: "Bekasi / Remote",
       desc: "Memimpin desain untuk suite fintech B2B yang digunakan 300+ perusahaan. Build design system dari nol dan potong design-to-dev handoff time setengah.",
     },
     {
@@ -50,7 +50,7 @@ const experienceByLanguage = {
       period: "2023 — Now",
       role: "Senior Product Designer",
       company: "Finara",
-      place: "Jakarta / Remote",
+      place: "Bekasi / Remote",
       desc: "Leading design for a B2B fintech suite used by 300+ companies. Built the design system from zero and cut design-to-dev handoff time in half.",
     },
     {
@@ -64,7 +64,7 @@ const experienceByLanguage = {
       period: "2019 — 2021",
       role: "Freelance Designer & Developer",
       company: "Independent",
-      place: "Jakarta",
+      place: "Bekasi / Remote",
       desc: "Partnered with 12 early-stage startups from idea to launch — branding, product UI, and production-ready front-end.",
     },
     {

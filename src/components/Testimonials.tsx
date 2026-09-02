@@ -7,7 +7,7 @@ import { ArrowUpRight, Check, Plus, Reveal, SectionHead } from "./shared";
 const quotesByLanguage = {
   id: [
     {
-      text: "Raka adalah desainer langka yang juga ship kode. Dia rebuild dashboard kami dalam enam minggu dan support tickets turun setengah. Totally worth it.",
+      text: "RuangDigital adalah desainer yang juga ship kode. Dia rebuild dashboard kami dalam enam minggu dan support tickets turun setengah. Totally worth it.",
       name: "Sarah Chen",
       role: "VP Product, Finara",
       initials: "SC",

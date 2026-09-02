@@ -46,242 +46,79 @@ function Stat({
 }
 
 /* ─────────────────────────────────────────────────────────────
-   Floating card wrapper
+   Browser Mockup (Right Side Visual)
 ───────────────────────────────────────────────────────────── */
-function FloatingCard({
-  children,
-  className = "",
-  style,
-}: {
-  children: ReactNode;
-  className?: string;
-  style?: CSSProperties;
-}) {
+function BrowserMockup() {
   return (
-    <div
-      className={`absolute rounded-2xl border border-white/70 bg-white/92 backdrop-blur-md ${className}`}
-      style={{
-        boxShadow:
-          "0 8px 32px -8px rgba(26,107,216,0.18), 0 2px 8px -2px rgba(10,14,23,0.08), 0 0 0 1px rgba(179,208,240,0.35)",
-        ...style,
-      }}
+    <div 
+      className="relative w-full overflow-hidden rounded-2xl bg-[#F4F7FB] border border-[#D9DEE8]" 
+      style={{ boxShadow: '0 24px 64px -16px rgba(36,120,201,0.12), 0 4px 16px -4px rgba(0,0,0,0.04)' }}
     >
-      {children}
-    </div>
-  );
-}
-
-/* ─────────────────────────────────────────────────────────────
-   Main project card
-───────────────────────────────────────────────────────────── */
-function MainProjectCard() {
-  const { language } = useLanguage();
-  const files = [
-    { name: "hero-section.tsx", lang: "TSX", color: "#61dafb" },
-    { name: "design-system.ts", lang: "TS", color: "#3178c6" },
-    { name: "dashboard.figma", lang: "Fig", color: "#a259ff" },
-  ];
-  return (
-    <div
-      className="relative w-full overflow-hidden rounded-2xl border border-white/60"
-      style={{
-        boxShadow:
-          "0 24px 64px -16px rgba(26,107,216,0.22), 0 4px 16px -4px rgba(10,14,23,0.12), 0 0 0 1px rgba(179,208,240,0.4)",
-        background: "linear-gradient(160deg, #ffffff 0%, rgba(243,250,255,0.95) 100%)",
-      }}
-    >
-      {/* Window chrome */}
-      <div className="flex items-center gap-2 border-b border-[rgba(179,208,240,0.4)] bg-[rgba(243,250,255,0.8)] px-4 py-3">
-        <span className="h-2.5 w-2.5 rounded-full bg-[#FF5F57]" />
-        <span className="h-2.5 w-2.5 rounded-full bg-[#FFBD2E]" />
-        <span className="h-2.5 w-2.5 rounded-full bg-[#28C840]" />
-        <div className="ml-3 flex h-6 flex-1 items-center rounded-md bg-white/70 px-3 border border-[rgba(179,208,240,0.5)]">
-          <span className="font-mono text-[10px] text-mute">RuangDigital.com / work</span>
+      {/* Browser Chrome */}
+      <div className="flex items-center gap-2 border-b border-[#D9DEE8] bg-[#F4F7FB] px-4 py-3">
+        <div className="flex gap-1.5">
+          <span className="h-2 w-2 rounded-full bg-[#D9DEE8]" />
+          <span className="h-2 w-2 rounded-full bg-[#D9DEE8]" />
+          <span className="h-2 w-2 rounded-full bg-[#D9DEE8]" />
         </div>
+        <div className="mx-auto flex h-5 w-[160px] items-center justify-center rounded bg-white border border-[#D9DEE8]">
+          <span className="font-mono text-[9px] text-[#93A2BE]">agency.design</span>
+        </div>
+        <div className="w-[34px]"></div>
       </div>
 
-      {/* App body */}
-      <div className="p-4">
-        {/* Top bar */}
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <p className="text-[11px] font-mono font-medium tracking-widest uppercase text-mute">
-              Active Projects
-            </p>
-            <p className="text-lg font-bold text-ink mt-0.5">Q3 2026</p>
+      {/* Website Content */}
+      <div className="p-6 md:p-8 bg-white h-[380px] md:h-[440px] relative flex flex-col">
+        {/* Header */}
+        <div className="flex justify-between items-center mb-10">
+          <div className="font-bold text-[#000000] text-[11px] tracking-widest uppercase">
+            Agency™
           </div>
-          <div
-            className="flex h-8 items-center gap-1.5 rounded-full px-3 text-[11px] font-semibold text-white"
-            style={{ background: "linear-gradient(135deg, #1a6bd8, #6FAFE8)" }}
-          >
-            <span className="h-1.5 w-1.5 rounded-full bg-white/80 animate-pulse" />
-            Live
+          <div className="flex gap-4 text-[9px] font-semibold text-[#50627D] uppercase tracking-wider">
+            <span>Work</span>
+            <span>Studio</span>
           </div>
         </div>
 
-        {/* File list */}
-        <div className="space-y-2">
-          {files.map((f, i) => (
-            <div
-              key={f.name}
-              className="flex items-center gap-3 rounded-xl bg-white/70 px-3 py-2.5 border border-[rgba(179,208,240,0.3)] transition-all duration-200 hover:border-[rgba(26,107,216,0.25)] hover:bg-[rgba(243,250,255,0.9)]"
-              style={{ animationDelay: `${i * 100}ms` }}
-            >
-              <span
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[9px] font-bold text-white"
-                style={{ background: f.color }}
-              >
-                {f.lang}
-              </span>
-              <span className="font-mono text-xs text-ink font-medium flex-1 truncate">
-                {f.name}
-              </span>
-              <div className="h-1.5 w-12 rounded-full bg-[rgba(179,208,240,0.5)]">
-                <div
-                  className="h-full rounded-full"
-                  style={{
-                    width: `${[85, 60, 42][i]}%`,
-                    background: "linear-gradient(90deg, #6FAFE8, #1a6bd8)",
-                  }}
-                />
-              </div>
+        {/* Hero inside mockup */}
+        <div className="flex-1 flex flex-col justify-center pb-8 relative z-10">
+          <p className="text-[9px] font-mono text-[#2478C9] uppercase tracking-widest mb-3">
+            Digital Craft
+          </p>
+          <h2 className="text-3xl md:text-4xl font-semibold text-[#000000] leading-[1.1] tracking-tight">
+            Building <br />
+            <span className="text-[#93A2BE] font-normal italic">premium</span> digital<br />
+            experiences.
+          </h2>
+          
+          <div className="mt-8 flex gap-3">
+            <div className="h-8 px-5 rounded-full bg-[#000000] text-white text-[10px] font-medium flex items-center justify-center transition-transform hover:-translate-y-0.5 cursor-pointer">
+              Our Portfolio
             </div>
-          ))}
+            <div className="h-8 w-8 rounded-full bg-[#F4F7FB] text-[#2478C9] flex items-center justify-center border border-[#D9DEE8] transition-transform hover:-translate-y-0.5 cursor-pointer">
+               <ArrowUpRight className="h-3 w-3" />
+            </div>
+          </div>
         </div>
-
-        {/* Bottom metrics */}
-        <div className="mt-4 grid grid-cols-3 gap-2">
-          {[
-            { label: language === "id" ? "Dikirim" : "Shipped", val: "48" },
-            { label: language === "id" ? "Klien" : "Clients", val: "26" },
-            { label: language === "id" ? "Skor" : "Score", val: "98" },
-          ].map((m) => (
-            <div
-              key={m.label}
-              className="rounded-xl bg-[rgba(243,250,255,0.8)] p-2.5 text-center border border-[rgba(179,208,240,0.3)]"
-            >
-              <p className="text-base font-bold text-ink">{m.val}</p>
-              <p className="font-mono text-[9px] tracking-widest uppercase text-mute mt-0.5">
-                {m.label}
-              </p>
+        
+        {/* Subtle editorial card */}
+        <div className="absolute right-6 bottom-6 w-[160px] h-[180px] bg-[#F4F7FB] rounded-xl border border-[#D9DEE8] flex flex-col p-3 overflow-hidden">
+          <div className="w-full flex-1 bg-white rounded-lg border border-[#D9DEE8] mb-3 relative overflow-hidden flex items-center justify-center">
+            <div className="w-16 h-16 rounded-full bg-[#A9C9ED] opacity-20 blur-md absolute"></div>
+            <div className="w-8 h-8 rounded-full border border-[#2478C9] opacity-30"></div>
+          </div>
+          <div className="flex justify-between items-end">
+            <div>
+              <div className="text-[8px] text-[#93A2BE] uppercase tracking-wider mb-0.5">Latest</div>
+              <div className="text-[10px] text-[#000000] font-medium">Fintech UI</div>
             </div>
-          ))}
+            <div className="w-4 h-4 rounded-full bg-[#A9C9ED]/40 flex items-center justify-center">
+              <span className="text-[8px] text-[#0F5BB5] font-bold">→</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  );
-}
-
-/* ─────────────────────────────────────────────────────────────
-   Analytics mini-card
-───────────────────────────────────────────────────────────── */
-function AnalyticsCard() {
-  const bars = [40, 65, 45, 80, 60, 90, 72];
-  return (
-    <FloatingCard
-      className="animate-float px-4 py-3 w-[155px]"
-      style={{ top: "-22px", right: "-18px" }}
-    >
-      <p className="font-mono text-[9px] font-semibold tracking-[0.18em] uppercase text-mute">
-        Engagement
-      </p>
-      <p className="mt-1 text-xl font-bold text-ink">
-        +24%
-        <span className="ml-1 text-[10px] font-medium text-emerald-500">↑</span>
-      </p>
-      {/* Mini bar chart */}
-      <div className="mt-2 flex items-end gap-[3px] h-8">
-        {bars.map((h, i) => (
-          <div
-            key={i}
-            className="flex-1 rounded-sm"
-            style={{
-              height: `${h}%`,
-              background:
-                i === bars.length - 1
-                  ? "linear-gradient(180deg, #1a6bd8, #6FAFE8)"
-                  : "rgba(179,208,240,0.55)",
-            }}
-          />
-        ))}
-      </div>
-      <p className="mt-1.5 font-mono text-[9px] text-mute">Last 7 days</p>
-    </FloatingCard>
-  );
-}
-
-/* ─────────────────────────────────────────────────────────────
-   Message/client mini-card
-───────────────────────────────────────────────────────────── */
-function MessageCard() {
-  return (
-    <FloatingCard
-      className="animate-float-slow flex items-start gap-3 px-4 py-3 w-[210px]"
-      style={{ bottom: "-20px", left: "-16px" }}
-    >
-      <div
-        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-white text-[11px] font-bold"
-        style={{ background: "linear-gradient(135deg, #6FAFE8, #1a6bd8)" }}
-      >
-        JA
-      </div>
-      <div className="min-w-0">
-        <div className="flex items-center gap-1.5">
-          <p className="text-xs font-semibold text-ink">James A.</p>
-          <span className="h-1 w-1 rounded-full bg-emerald-400" />
-        </div>
-        <p className="text-[11px] text-mute leading-relaxed mt-0.5 line-clamp-2">
-          "The design handoff was flawless — dev loved it!"
-        </p>
-      </div>
-    </FloatingCard>
-  );
-}
-
-/* ─────────────────────────────────────────────────────────────
-   Status notification chip
-───────────────────────────────────────────────────────────── */
-function StatusBadge() {
-  return (
-    <div
-      className="animate-float absolute -bottom-3 -right-3 flex items-center gap-2 rounded-xl px-3.5 py-2.5"
-      style={{
-        background: "linear-gradient(135deg, rgba(26,107,216,0.92), rgba(21,83,168,0.96))",
-        boxShadow: "0 8px 24px -6px rgba(26,107,216,0.5), 0 0 0 1px rgba(179,208,240,0.3)",
-      }}
-    >
-      <span className="relative flex h-2 w-2">
-        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-50" />
-        <span className="relative inline-flex h-2 w-2 rounded-full bg-white" />
-      </span>
-      <p className="text-[11px] font-semibold text-white">Available — Q3 2026</p>
-    </div>
-  );
-}
-
-/* ─────────────────────────────────────────────────────────────
-   Skill tags row
-───────────────────────────────────────────────────────────── */
-function SkillTagsCard() {
-  const skills = ["UI/UX", "React", "Figma", "Next.js"];
-  return (
-    <FloatingCard
-      className="animate-float px-3 py-2.5 flex items-center gap-2"
-      style={{ top: "44%", right: "-28px" }}
-    >
-      {skills.map((s) => (
-        <span
-          key={s}
-          className="rounded-md px-2 py-1 text-[10px] font-semibold"
-          style={{
-            background: "rgba(179,208,240,0.35)",
-            color: "#1553a8",
-          }}
-        >
-          {s}
-        </span>
-      ))}
-    </FloatingCard>
   );
 }
 
@@ -299,17 +136,17 @@ export default function Hero() {
   const headline =
     language === "id"
       ? [
-          "Desain. Bangun.",
-          "Luncurkan. Ulangi.",
-          "Karya",
-          "Bicara Sendiri.",
-        ]
+        "Desain. Bangun.",
+        "Luncurkan. Ulangi.",
+        "Karya",
+        "Bicara Sendiri.",
+      ]
       : ["Design. Build.", "Ship. Repeat.", "The Work", "Speaks Itself."];
 
   const viewWork = language === "id" ? "Lihat proyek saya" : "View my work";
   const aboutMe = language === "id" ? "Tentang saya" : "About me";
   const ratingText = language === "id" ? "5.0 — 26 klien puas" : "5.0 — 26 happy clients";
-  const locationText = language === "id" ? "📍 Jakarta · Bekerja di seluruh dunia" : "📍 Jakarta · Working worldwide";
+  const locationText = language === "id" ? "📍 Bekasi · Bekerja di seluruh dunia" : "📍 Bekasi · Working worldwide";
 
   return (
     <section
@@ -425,13 +262,13 @@ export default function Hero() {
             >
               {language === "id" ? (
                 <>
-                  Saya <strong style={{ color: "#183B56", fontWeight: 700 }}>Raka Dirga</strong> — product designer dan
+                  Saya <strong style={{ color: "#183B56", fontWeight: 700 }}>RuangDigital</strong> — product designer dan
                   creative developer. Selama 7+ tahun saya membantu startup mengubah masalah yang rumit menjadi produk yang bersih,
                   intuitif, dan benar-benar disukai orang.
                 </>
               ) : (
                 <>
-                  I&rsquo;m <strong style={{ color: "#183B56", fontWeight: 700 }}>Raka Dirga</strong> — product designer &amp;
+                  I&rsquo;m <strong style={{ color: "#183B56", fontWeight: 700 }}>RuangDigital</strong> — product designer &amp;
                   creative developer. For 7+ years I&rsquo;ve helped startups turn complex problems into clean, intuitive products that people actually love.
                 </>
               )}
@@ -510,35 +347,39 @@ export default function Hero() {
 
           {/* ══ RIGHT — Floating UI composition ══════════════ */}
           <div
-            className="fade-up relative mx-auto w-full max-w-[400px] lg:max-w-none"
+            className="fade-up relative mx-auto w-full max-w-[480px] lg:max-w-none lg:-mr-10 xl:-mr-16"
             style={{ "--d": "0.3s" } as CSSProperties}
           >
-            {/* Glow behind cards */}
+            {/* Glow behind the browser */}
             <div
-              className="pointer-events-none absolute inset-0 rounded-3xl opacity-50 blur-[60px]"
+              className="pointer-events-none absolute inset-0 opacity-40 blur-[80px]"
               aria-hidden="true"
               style={{
-                background:
-                  "radial-gradient(ellipse at 60% 40%, rgba(111,175,232,0.5) 0%, transparent 70%)",
+                background: "radial-gradient(circle at 50% 50%, #A9C9ED 0%, transparent 70%)",
+                transform: "scale(1.2)"
               }}
             />
 
-            {/* Card composition container */}
-            <div className="relative mx-4 lg:mx-0" style={{ paddingTop: "24px", paddingBottom: "32px", paddingRight: "32px" }}>
-              {/* Main card */}
-              <MainProjectCard />
+            {/* Browser Mockup Container */}
+            <div className="relative z-10 w-full" style={{ padding: "24px 0 40px 24px" }}>
+              <BrowserMockup />
 
-              {/* Analytics card — top right */}
-              <AnalyticsCard />
-
-              {/* Skills tag card — right middle */}
-              <SkillTagsCard />
-
-              {/* Message card — bottom left */}
-              <MessageCard />
-
-              {/* Status badge — bottom right */}
-              <StatusBadge />
+              {/* Floating Label */}
+              <div 
+                className="absolute animate-float flex items-center gap-2.5 rounded-full bg-white px-5 py-2.5 border border-[#D9DEE8]"
+                style={{ 
+                  boxShadow: "0 8px 32px -8px rgba(36,120,201,0.15)",
+                  bottom: "16px",
+                  left: "0",
+                  zIndex: 20
+                }}
+              >
+                <div className="flex h-2 w-2 items-center justify-center relative">
+                  <span className="absolute h-full w-full animate-ping rounded-full bg-[#2D82D9] opacity-40"></span>
+                  <span className="relative h-1.5 w-1.5 rounded-full bg-[#2478C9]"></span>
+                </div>
+                <span className="text-[12px] font-medium text-[#000000] tracking-wide">01 — Web Design</span>
+              </div>
             </div>
           </div>
         </div>

@@ -1,11 +1,11 @@
 import { useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
 import { useLanguage } from "./LanguageContext";
-import { ArrowUpRight, Check, Dribbble, GitHub, LinkedIn, Logo, Mail, Reveal, XSocial } from "./shared";
+import { ArrowUpRight, Check, Dribbble, GitHub, Instagram, Logo, Mail, Reveal, XSocial } from "./shared";
 
 const socials = [
   { label: "GitHub", href: "https://github.com", icon: <GitHub /> },
-  { label: "LinkedIn", href: "https://linkedin.com", icon: <LinkedIn /> },
+  { label: "Instagram", href: "https://www.instagram.com/ruangdigitalgroup/", icon: <Instagram /> },
   { label: "Dribbble", href: "https://dribbble.com", icon: <Dribbble /> },
   { label: "X (Twitter)", href: "https://x.com", icon: <XSocial /> },
 ];
@@ -40,31 +40,31 @@ function ContactForm() {
   const formCopy =
     language === "id"
       ? {
-          brief: "Brief proyek",
-          name: "Nama Anda",
-          email: "Alamat email",
-          type: "Jenis proyek",
-          typePlaceholder: "Pilih layanan…",
-          message: "Ceritakan tentang proyek Anda",
-          textareaPlaceholder: "Apa yang sedang Anda bangun? Kapan timeline-nya? Seperti apa sukses itu?",
-          submit: "Kirim brief saya",
-          sending: "Mengirim brief…",
-          another: "Kirim brief lain",
-          follow: "Tidak ada spam, tidak ada newsletter — saya balas dalam 24 jam.",
-        }
+        brief: "Brief proyek",
+        name: "Nama Anda",
+        email: "Alamat email",
+        type: "Jenis proyek",
+        typePlaceholder: "Pilih layanan…",
+        message: "Ceritakan tentang proyek Anda",
+        textareaPlaceholder: "Apa yang sedang Anda bangun? Kapan timeline-nya? Seperti apa sukses itu?",
+        submit: "Kirim brief saya",
+        sending: "Mengirim brief…",
+        another: "Kirim brief lain",
+        follow: "Tidak ada spam, tidak ada newsletter — saya balas dalam 24 jam.",
+      }
       : {
-          brief: "Project brief",
-          name: "Your name",
-          email: "Email address",
-          type: "Project type",
-          typePlaceholder: "Select a service…",
-          message: "Tell me about your project",
-          textareaPlaceholder: "What are you building? What’s the timeline? What does success look like?",
-          submit: "Send my brief",
-          sending: "Sending brief…",
-          another: "Send another brief",
-          follow: "No spam, no newsletters — I reply within 24 hours.",
-        };
+        brief: "Project brief",
+        name: "Your name",
+        email: "Email address",
+        type: "Project type",
+        typePlaceholder: "Select a service…",
+        message: "Tell me about your project",
+        textareaPlaceholder: "What are you building? What’s the timeline? What does success look like?",
+        submit: "Send my brief",
+        sending: "Sending brief…",
+        another: "Send another brief",
+        follow: "No spam, no newsletters — I reply within 24 hours.",
+      };
 
   const projectTypes = projectTypesByLanguage[language];
 
@@ -88,17 +88,17 @@ function ContactForm() {
     const successText =
       language === "id"
         ? {
-            thanks: `Terima kasih${form.name ? `, ${form.name.split(" ")[0]}` : ""}!`,
-            intro: "Brief Anda sudah masuk ke inbox saya. Saya akan membalas ke",
-            email: form.email || "email Anda",
-            rest: "dalam 24 jam — biasanya lebih cepat.",
-          }
+          thanks: `Terima kasih${form.name ? `, ${form.name.split(" ")[0]}` : ""}!`,
+          intro: "Brief Anda sudah masuk ke inbox saya. Saya akan membalas ke",
+          email: form.email || "email Anda",
+          rest: "dalam 24 jam — biasanya lebih cepat.",
+        }
         : {
-            thanks: `Thanks${form.name ? `, ${form.name.split(" ")[0]}` : ""}!`,
-            intro: "Your brief is in my inbox. I’ll reply to",
-            email: form.email || "your email",
-            rest: "within 24 hours — usually much faster.",
-          };
+          thanks: `Thanks${form.name ? `, ${form.name.split(" ")[0]}` : ""}!`,
+          intro: "Your brief is in my inbox. I’ll reply to",
+          email: form.email || "your email",
+          rest: "within 24 hours — usually much faster.",
+        };
 
     return (
       <div className="animate-[fadeUp_0.5s_cubic-bezier(0.22,1,0.36,1)_both] flex h-full min-h-[480px] flex-col items-center justify-center rounded-2xl border border-white/15 bg-white/5 p-8 text-center backdrop-blur">
@@ -140,7 +140,7 @@ function ContactForm() {
             id="cf-name"
             type="text"
             required
-            placeholder="Jane Smith"
+            placeholder="nama anda"
             value={form.name}
             onChange={update("name")}
             className={inputClass}
@@ -155,7 +155,7 @@ function ContactForm() {
             id="cf-email"
             type="email"
             required
-            placeholder="jane@company.com"
+            placeholder="Email Address"
             value={form.email}
             onChange={update("email")}
             className={inputClass}
@@ -249,21 +249,21 @@ export function Cta() {
   const ctaCopy =
     language === "id"
       ? {
-          eyebrow: "Kontak",
-          headline: ["Punya ide?", "Yuk wujudkan itu", "nyata."],
-          subtitle:
-            "Satu slot terbuka untuk Q3 2026. Ceritakan produk Anda, timeline, dan apa arti hasil yang baik — saya akan membalas dalam 24 jam.",
-          button: "Kirim brief saya",
-          follow: "Tidak ada spam, tidak ada newsletter — saya balas dalam 24 jam.",
-        }
+        eyebrow: "Kontak",
+        headline: ["Punya ide?", "Yuk wujudkan itu", "nyata."],
+        subtitle:
+          "Satu slot terbuka untuk Q3 2026. Ceritakan produk Anda, timeline, dan apa arti hasil yang baik — saya akan membalas dalam 24 jam.",
+        button: "Kirim brief saya",
+        follow: "Tidak ada spam, tidak ada newsletter — saya balas dalam 24 jam.",
+      }
       : {
-          eyebrow: "Contact",
-          headline: ["Have an idea?", "Let’s make it", "real."],
-          subtitle:
-            "One open slot for Q3 2026. Tell me about your product, your timeline, and what “good outcome” looks like — I’ll reply within 24 hours.",
-          button: "Send my brief",
-          follow: "No spam, no newsletters — I reply within 24 hours.",
-        };
+        eyebrow: "Contact",
+        headline: ["Have an idea?", "Let’s make it", "real."],
+        subtitle:
+          "One open slot for Q3 2026. Tell me about your product, your timeline, and what “good outcome” looks like — I’ll reply within 24 hours.",
+        button: "Send my brief",
+        follow: "No spam, no newsletters — I reply within 24 hours.",
+      };
 
   return (
     <section id="contact" className="relative scroll-mt-24 overflow-hidden bg-ink text-white">
@@ -296,13 +296,13 @@ export function Cta() {
 
           <Reveal delay={150} className="mt-10 flex flex-wrap items-center gap-8">
             <a
-              href="mailto:hello@rakadirga.com"
+              href="mailto:ruangdigitalgroup01@gmail.com"
               className="group inline-flex items-center gap-4 text-xl font-bold tracking-tight text-white transition-colors duration-300 hover:text-primary-soft sm:text-2xl"
             >
               <span className="grid h-12 w-12 place-items-center rounded-full bg-primary text-white transition-transform duration-300 group-hover:scale-110">
                 <Mail className="h-5 w-5" />
               </span>
-              hello@rakadirga.com
+              ruangdigitalgroup01@gmail.com
               <ArrowUpRight className="h-6 w-6 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
             </a>
             <div className="flex items-center gap-3">
