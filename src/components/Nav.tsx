@@ -222,7 +222,7 @@ export default function Nav() {
         </div>
 
         <p className="pb-6 text-center font-mono text-[11px] text-mute">
-          hello@rakadirga.com · Jakarta, ID (UTC+7)
+          ruangdigitalgroup.com · Bekasi, ID (UTC+7)
         </p>
       </div>
     </header>
